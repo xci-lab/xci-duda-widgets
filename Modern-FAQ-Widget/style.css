@@ -21,9 +21,6 @@ body *{
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
     transition: all .5s;
 }
-
-
-
 .faqQuestion{
     display: flex;
     justify-content: space-between;
@@ -75,6 +72,7 @@ body *{
     background: white;
     cursor: pointer;
     transition:all .5s;
+    border: 1px solid green;
 }
 .cstmBtn:hover{
     background: rgb(7, 127, 41);
