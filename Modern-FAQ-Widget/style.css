@@ -1,0 +1,99 @@
+body{
+    padding: 80px;
+    max-width: 1200px;
+    margin: auto;
+    font-size: 16px;
+    box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+body *{
+    position: relative;
+    color: #303030;
+}
+.titleTxtContent{
+    font-size: 45px;
+    font-weight: 600;
+}
+.faqItemContainer{
+    transition: all .5s;
+}
+.faqItemContainer:hover{
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    transition: all .5s;
+}
+
+
+
+.faqQuestion{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: gainsboro;
+    border-radius: 10px;
+    margin-top: 20px;
+    z-index: 1;
+    position: relative;
+    cursor: pointer;
+    transition: all .5s;
+}
+.faqItemContainer:hover .faqQuestion{
+    background-color: rgb(7, 127, 41);
+    transition: all .5s;
+
+}
+.faqItemContainer:hover .faqQuestion .qLabel, .faqItemContainer:hover .faqQuestion .qTxt,.faqItemContainer:hover .faqQuestion .qIcon i{
+    color: white !important;
+    transition: all .5s;
+}
+.qTxtContent{
+    display: flex;
+}
+.qLabel{
+    padding-right: 10px;
+    color: rgb(7, 127, 41);
+    font-weight: 600;
+}
+.faqAnswer{
+    padding: 30px 20px 20px 20px;
+    border: rgb(7, 127, 41) solid 1px;
+    margin-top: -20px;
+    position: relative;
+    border-radius: 0 0 10px 10px;
+    display: none;
+}
+
+.cstmBtn{
+    margin-top: 30px;
+    width: 100px;
+    height: 20px;
+    padding: 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    transition:all .5s;
+}
+.cstmBtn:hover{
+    background: rgb(7, 127, 41);
+    transition:all .5s;
+}
+.cstmBtn:hover .text{
+    color:white;
+    transition:all .5s;
+}
+.cstmBtn .text{
+    text-align: center;
+    margin: 0;
+    position: relative;
+    width: 100%;
+}
+.qIcon{
+    transition:all .5s;
+}
+.flipIcon{
+    transition:all .5s;
+    transform: scaleY(-1);
+}
