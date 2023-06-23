@@ -165,11 +165,11 @@ body {
 
 .widgetInfoButton:hover{
   transition:all .5s;
-   background-color: #43d9fe;
+   background-color: #00ff9d;
 }
 .widgetInfoButton:hover a{
   transition:all .5s;
-   color: #1a1e23;
+   color: white;
 }
 
 @-webkit-keyframes pulse {
