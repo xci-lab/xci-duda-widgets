@@ -169,7 +169,6 @@ body {
 }
 .widgetInfoButton:hover a{
   transition:all .5s;
-   color: white;
 }
 
 @-webkit-keyframes pulse {
