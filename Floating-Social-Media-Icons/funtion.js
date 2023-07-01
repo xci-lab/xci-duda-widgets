@@ -31,7 +31,7 @@ let dmAPI = {
   },
 };
 let data = {
-  device: "mobile", //desktop || tablet || mobile
+  device: "desktop", //desktop || tablet || mobile
   config: {
     socMedList: [
       {
