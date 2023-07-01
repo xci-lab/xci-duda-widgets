@@ -93,6 +93,13 @@ let data = {
           `<i class="bx bxl-pinterest"></i>`,
         socMedTitle: "Pinterest",
         link: ""
+      },
+      {
+        icon:
+          `<i class='bx bxs-book-reader'></i>`,
+        socMedTitle: "CustomIcon",
+        link: ""
+        
       }
     ],
   },
