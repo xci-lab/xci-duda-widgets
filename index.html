@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>XCI</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body id="dt-root">
+  <div class="dt-header">
+    <div class="header-row dt-row">
+      <div class="header-col cols-wrapper">
+        <div class="image-container">
+          <img
+            src="https://cdn-icons-png.freepik.com/512/8992/8992455.png?ga=GA1.1.974582048.1713062133&"
+            alt="my logo">
+        </div>
+        <div class="nav-container">
+          <nav class="nav-links">
+            <ul>
+              <li>
+                <a href="#home">HOME</a>
+              </li>
+              <li style="display: none;">
+                <a href="/exercise.html">EXERCISES</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-content">
+    <div class="dt-banner  dt-row" id="myContainer">
+      <div class="cols-wrapper">
+        <div class="banner-text">
+          <h1>XCI</h1>
+          <p>Web developers are responsible for designing and developing websites and website applications. Using a
+            variety of programming languages and web technologies, web developers manage site functionality, implement
+            application features, and integrate security measures.</p>
+          <button>Read More</button>
+        </div>
+        <!--         <div class="banner-image">
+          <img
+            src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+            alt="personal computer">
+        </div> -->
+      </div>
+    </div>
+    <div class="dt-row">
+      <div class="cols-wrapper">
+        <div class="keep-track-content">
+          <h2>Pay Here</h2><br>
+          <div id="smart-button-container">
+            <div style="text-align: center"><label for="description">Description </label><input type="text"
+                name="descriptionInput" id="description" maxlength="127" value=""></div>
+            <p id="descriptionError" style="visibility: hidden; color:red; text-align: center;">Please enter a
+              description</p>
+            <div style="text-align: center"><label for="amount">Amount </label><input name="amountInput" type="number"
+                id="amount" value=""><span> USD</span></div>
+            <p id="priceLabelError" style="visibility: hidden; color:red; text-align: center;">Please enter a price</p>
+            <div id="invoiceidDiv" style="text-align: center; display: none;"><label for="invoiceid"> </label><input
+                name="invoiceid" maxlength="127" type="text" id="invoiceid" value=""></div>
+            <p id="invoiceidError" style="visibility: hidden; color:red; text-align: center;">Please enter an Invoice ID
+            </p>
+            <div style="text-align: center; margin:auto;" id="paypal-button-container"></div>
+          </div>
+          <script
+            src="https://www.paypal.com/sdk/js?client-id=AUeHoQ_X4mu70Tq_8FR4s8zWE25S-5KE83IlOfqeEQdwVSUoO16aRTNAbRbL8eFttm6G2LrSH_rBRQxN&enable-funding=venmo&currency=USD"
+            data-sdk-integration-source="button-factory"></script>
+          <script>
+            function initPayPalButton() {
+              var description = document.querySelector('#smart-button-container #description');
+              var amount = document.querySelector('#smart-button-container #amount');
+              var descriptionError = document.querySelector('#smart-button-container #descriptionError');
+              var priceError = document.querySelector('#smart-button-container #priceLabelError');
+              var invoiceid = document.querySelector('#smart-button-container #invoiceid');
+              var invoiceidError = document.querySelector('#smart-button-container #invoiceidError');
+              var invoiceidDiv = document.querySelector('#smart-button-container #invoiceidDiv');
+
+              var elArr = [description, amount];
+
+              if (invoiceidDiv.firstChild.innerHTML.length > 1) {
+                invoiceidDiv.style.display = "block";
+              }
+
+              var purchase_units = [];
+              purchase_units[0] = {};
+              purchase_units[0].amount = {};
+
+              function validate(event) {
+                return event.value.length > 0;
+              }
+
+              paypal.Buttons({
+                style: {
+                  color: 'gold',
+                  shape: 'rect',
+                  label: 'paypal',
+                  layout: 'vertical',
+
+                },
+
+                onInit: function (data, actions) {
+                  actions.disable();
+
+                  if (invoiceidDiv.style.display === "block") {
+                    elArr.push(invoiceid);
+                  }
+
+                  elArr.forEach(function (item) {
+                    item.addEventListener('keyup', function (event) {
+                      var result = elArr.every(validate);
+                      if (result) {
+                        actions.enable();
+                      } else {
+                        actions.disable();
+                      }
+                    });
+                  });
+                },
+
+                onClick: function () {
+                  if (description.value.length < 1) {
+                    descriptionError.style.visibility = "visible";
+                  } else {
+                    descriptionError.style.visibility = "hidden";
+                  }
+
+                  if (amount.value.length < 1) {
+                    priceError.style.visibility = "visible";
+                  } else {
+                    priceError.style.visibility = "hidden";
+                  }
+
+                  if (invoiceid.value.length < 1 && invoiceidDiv.style.display === "block") {
+                    invoiceidError.style.visibility = "visible";
+                  } else {
+                    invoiceidError.style.visibility = "hidden";
+                  }
+
+                  purchase_units[0].description = description.value;
+                  purchase_units[0].amount.value = amount.value;
+
+                  if (invoiceid.value !== '') {
+                    purchase_units[0].invoice_id = invoiceid.value;
+                  }
+                },
+
+                createOrder: function (data, actions) {
+                  return actions.order.create({
+                    purchase_units: purchase_units,
+                  });
+                },
+
+                onApprove: function (data, actions) {
+                  return actions.order.capture().then(function (orderData) {
+
+                    // Full available details
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                    // Show a success message within this page, e.g.
+                    const element = document.getElementById('paypal-button-container');
+                    element.innerHTML = '';
+                    element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+
+                  });
+                },
+
+                onError: function (err) {
+                  console.log(err);
+                }
+              }).render('#paypal-button-container');
+            }
+            initPayPalButton();
+          </script>
+          <p>Thank you so much for trusting XCI. Looking forward for more projects! :)</p>
+        </div>
+      </div>
+    </div>
+    <div class="f-bleed dt-row">
+      <div class="cols-wrapper">
+        <div class="image-content">
+          <img
+            src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+            alt="computer">
+        </div>
+        <div class="dt-text-content">
+          <h3>Quick Search</h3>
+          <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+            easily.</p>
+          <h3>iCloud Sync</h3>
+          <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+            easily.</p>
+          <h3>Complete History</h3>
+          <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+            easily.</p>
+        </div>
+      </div>
+    </div>
+    <div class="dt-row">
+      <div class="cols-wrapper">
+        <div class="access-clipboard-cols">
+          <div class="content">
+            <h2>Access clipboard anywhere</h2>
+            <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+              easily.</p>
+            <img
+              src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+              alt="devices">
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="dt-row c-dt-row">
+      <div class="c-cols-wrapper cols-wrapper">
+        <div class="dt-cols">
+          <h2>Super Charge Your Workflow</h2>
+        </div>
+        <div class="dt-cols">
+          <div class="dt-c-cols">
+            <h3>This Is a Title</h3>
+            <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+              easily.</p>
+          </div>
+          <div class="dt-c-cols">
+            <h3>This Is a Title</h3>
+            <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+              easily.</p>
+          </div>
+          <div class="dt-c-cols">
+            <h3>This Is a Title</h3>
+            <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+              easily.</p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="dt-footer">
+      <div class="dt-row">
+        <div class="dt-cols-wrapper">
+          <div class="dt-cols">
+            <h2>Contact Us Now!</h2>
+            <p>This is a paragraph. Writing in paragraphs lets your visitor find what they are looking for quickly and
+              easily.</p>
+            <div class="dt-cols-row">
+              <button>Email Us</button>
+              <button>Call Us</button>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="dt-row">
+        <div class="dt-cols-wrapper">
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
